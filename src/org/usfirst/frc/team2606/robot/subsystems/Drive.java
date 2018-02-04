@@ -28,8 +28,7 @@ public class Drive extends Subsystem {
     private ADIS16448_IMU gyro;
     private double gyroDesiredHeading;
     private Ultrasonic ultrasonic;
-    //private Encoder leftEncoder;
-    //private Encoder rightEncoder;
+    private Encoder leftEncoder, rightEncoder;
 
     public Drive() {
         super();
@@ -42,10 +41,8 @@ public class Drive extends Subsystem {
         drive = new DifferentialDrive(left, right);
         gyro = new ADIS16448_IMU();
         ultrasonic = new Ultrasonic(RobotMap.ULTRASONIC_OUTPUT, RobotMap.ULTRASONIC_INPUT);
-        //leftEncoder = RobotMap.LEFT_ENCODER;
-        //rightEncoder = RobotMap.RIGHT_ENCODER;
-        //leftEncoder.setDistancePerPulse((0.5 * Math.PI) / 360.0);
-        //rightEncoder.setDistancePerPulse((0.5 * Math.PI) / 360.0);
+        leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, false, Encoder.EncodingType.k4X);
+        rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, false, Encoder.EncodingType.k4X);
     }
 
     /**
@@ -60,10 +57,6 @@ public class Drive extends Subsystem {
      * The log method puts interesting information to the SmartDashboard.
      */
     public void log() {
-        //SmartDashboard.putNumber("Left Distance", -leftEncoder.getDistance());
-        //SmartDashboard.putNumber("Right Distance", rightEncoder.getDistance());
-        //SmartDashboard.putNumber("Left Speed", -leftEncoder.getRate());
-        //SmartDashboard.putNumber("Right Speed", rightEncoder.getRate());
         SmartDashboard.putNumber("Gyro", gyro.getAngle());
         double angle=gyro.getAngle();
         double angleSuper=gyro.getAngle();
@@ -115,11 +108,11 @@ public class Drive extends Subsystem {
         return gyro.getAngle() - gyroDesiredHeading;
     }
 
-    //public double getDistanceInFeet() {
-    //    return (-leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
-    //}
+    public int getLeftEncoderCount() {
+        return leftEncoder.get();
+    }
 
-    //public double getDistanceInInches() {
-    //    return (-leftEncoder.getDistance() + rightEncoder.getDistance()) * 6.0;
-    //}
+    public int getRightEncoderCount() {
+        return rightEncoder.get();
+    }
 }

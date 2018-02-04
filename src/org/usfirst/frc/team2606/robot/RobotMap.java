@@ -20,7 +20,7 @@ public class RobotMap {
     public static final int FRONT_LEFT_MOTOR = 2;
     public static final int BACK_LEFT_MOTOR = 3;
 
-    public static final int CLIMB_MOTOR = 0;
+    public static final int CLIMB_MOTOR = 1;
     public static final int LIFT_MOTOR = 0;
 
     public static final int RIGHT_INTAKE_MOTOR = 0;
@@ -61,6 +61,12 @@ public class RobotMap {
     public static final int AUTO_MODES = 2;
     public static final int TELE_MODES = 2;
 
-    //public static final int LEFT_ENCODER = 0;
-    //public static final int RIGHT_ENCODER= 0;
+    public static final double WHEELBASE_RATIO = 0.6;
+    public static final double WHEEL_DIAMETER = 0.1524;
+
+    public static final int LEFT_ENCODER_CHANNEL_A = 2;
+    public static final int LEFT_ENCODER_CHANNEL_B = 3;
+    public static final int RIGHT_ENCODER_CHANNEL_A = 0;
+    public static final int RIGHT_ENCODER_CHANNEL_B = 1;
+
 }

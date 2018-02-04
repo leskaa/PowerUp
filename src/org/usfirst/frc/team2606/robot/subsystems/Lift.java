@@ -19,12 +19,14 @@ import org.usfirst.frc.team2606.robot.RobotMap;
 public class Lift extends Subsystem {
 
 	private SpeedController liftMotor;
+	private SpeedController climbMotor;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
 	public Lift() {
 		super();
 		liftMotor = new WPI_TalonSRX(RobotMap.LIFT_MOTOR);
+		climbMotor = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR);
 	}
 
 	public void initDefaultCommand() {
