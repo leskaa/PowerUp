@@ -16,7 +16,7 @@ public abstract class PathfinderDrive extends Command {
     Waypoint[] waypoints = new Waypoint[256];
 
     private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-            Trajectory.Config.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0);
+            Trajectory.Config.SAMPLES_HIGH, 0.05, RobotMap.MAX_VELOCITY, 2.0, 60.0);
     private Trajectory trajectory = Pathfinder.generate(waypoints, config);
     TankModifier modifier = new TankModifier(trajectory).modify(RobotMap.WHEELBASE_RATIO);
     protected EncoderFollower leftEncoderFollower = new EncoderFollower(modifier.getLeftTrajectory());
@@ -26,6 +26,8 @@ public abstract class PathfinderDrive extends Command {
         requires(Robot.drive);
         leftEncoderFollower.configureEncoder(Robot.drive.getLeftEncoderCount(), 1440, RobotMap.WHEEL_DIAMETER);
         rightEncoderFollower.configureEncoder(Robot.drive.getRightEncoderCount(), 1440, RobotMap.WHEEL_DIAMETER);
+        leftEncoderFollower.configurePIDVA(1.0,0.0,0.0,1/RobotMap.MAX_VELOCITY,0);
+        rightEncoderFollower.configurePIDVA(1.0,0.0,0.0,1/RobotMap.MAX_VELOCITY,0);
     }
     abstract Trajectory calculatePath(Waypoint startingPoint);
 

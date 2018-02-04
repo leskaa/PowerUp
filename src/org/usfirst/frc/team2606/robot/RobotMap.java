@@ -69,4 +69,6 @@ public class RobotMap {
     public static final int RIGHT_ENCODER_CHANNEL_A = 0;
     public static final int RIGHT_ENCODER_CHANNEL_B = 1;
 
+    public static final double MAX_VELOCITY = 1.7;
+
 }
