@@ -101,7 +101,7 @@ public class Drive extends Subsystem {
     }
 
     public double getGyroRealHeading() {
-        return gyro.getAngle();
+        return gyro.getAngleZ();
     }
 
     public double GyroAngleError() {
