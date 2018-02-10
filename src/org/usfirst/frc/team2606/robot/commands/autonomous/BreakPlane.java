@@ -11,7 +11,7 @@ import org.usfirst.frc.team2606.robot.RobotMap;
 
 
 public class BreakPlane extends PathfinderCommand {
-    BreakPlane() {
+    public BreakPlane() {
         super(new Waypoint[]{
                 new Waypoint(-4, -1, Pathfinder.d2r(-45)),
                 new Waypoint(-2, -2, 0),

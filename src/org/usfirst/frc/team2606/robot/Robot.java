@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2606.robot.subsystems.Drive;
+import org.usfirst.frc.team2606.robot.subsystems.Lift;
+import org.usfirst.frc.team2606.robot.subsystems.Intake;
 import org.usfirst.frc.team2606.robot.commands.autonomous.*;
 import org.usfirst.frc.team2606.robot.commands.teleop.*;
 
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
 	public static NetworkTable table;
 	public static OI oi;
 	public static Drive drive;
+	public static Lift lift;
+	public static Intake intake;
 	public static double scale;
 	public static double orientation;
 
@@ -49,6 +53,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		oi = new OI();
 		drive = new Drive();
+		lift = new Lift();
+		intake = new Intake();
 		table = NetworkTable.getTable("Dashboard");
 		frontCamera = CameraServer.getInstance().startAutomaticCapture("Forward Camera", RobotMap.FRONT_CAMERA);
 		backCamera = CameraServer.getInstance().startAutomaticCapture("Backward Camera", RobotMap.BACK_CAMERA);

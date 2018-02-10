@@ -9,6 +9,8 @@ public class TankDrive extends Command {
 
     public TankDrive() {
         requires(Robot.drive);
+        requires(Robot.lift);
+        requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -17,18 +19,23 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        int direction;
-        if (Robot.oi.getRightTriggerValue() < -.75) {
-            Robot.drive.move(Robot.oi.getLeftAnalogYValue(), Robot.oi.getRightAnalogYValue());
-            direction = 1;
-            SmartDashboard.putNumber("Reverse", Robot.oi.getRightTriggerValue());
+        Robot.drive.move(Robot.oi.getLeftAnalogYValue(), Robot.oi.getRightAnalogYValue());
+
+        if(Robot.oi.getRightTriggerValue()>0.5 && Robot.oi.getRightTriggerValue()>Robot.oi.getLeftTriggerValue()) {
+            Robot.lift.setLiftMotor(0.5);
+        } else if(Robot.oi.getLeftTriggerValue()>0.5) {
+            Robot.lift.setLiftMotor(-0.5);
         } else {
-            direction = -1;
-            SmartDashboard.putNumber("straight", Robot.oi.getRightTriggerValue()
-                    * direction);
+            Robot.lift.setLiftMotor(0);
         }
-        Robot.drive.move(Robot.oi.getLeftAnalogYValue() * direction,
-                Robot.oi.getRightAnalogYValue() * direction);
+
+        if(Robot.oi.getRightBumper().get()) {
+            Robot.intake.setMotors(-0.5, -0.5);
+        } else if(Robot.oi.getLeftBumper().get()) {
+            Robot.intake.setMotors(0.5, 0.5);
+        } else {
+            Robot.intake.setMotors(0, 0);
+        }
     }
 
     // TODO be able to finish?

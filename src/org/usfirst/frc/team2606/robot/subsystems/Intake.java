@@ -31,4 +31,9 @@ public class Intake extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
+
+	public void setMotors(double left, double right) {
+		this.left.set(left);
+		this.right.set(right);
+	}
 }

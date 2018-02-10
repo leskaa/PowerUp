@@ -10,7 +10,7 @@ import org.usfirst.frc.team2606.robot.Robot;
 import org.usfirst.frc.team2606.robot.RobotMap;
 
 
-class PathfinderCommand extends Command {
+public class PathfinderCommand extends Command {
     private EncoderFollower left, right;
     private Waypoint[] points;
     PathfinderCommand(Waypoint[] points) {
