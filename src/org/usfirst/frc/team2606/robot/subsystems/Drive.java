@@ -27,7 +27,6 @@ public class Drive extends Subsystem {
     private DifferentialDrive drive;
     private ADIS16448_IMU gyro;
     private double gyroDesiredHeading;
-    private Ultrasonic ultrasonic;
     private Encoder leftEncoder, rightEncoder;
 
     public Drive() {
@@ -40,9 +39,8 @@ public class Drive extends Subsystem {
         right = new SpeedControllerGroup(frontRight, backRight);
         drive = new DifferentialDrive(left, right);
         gyro = new ADIS16448_IMU();
-        ultrasonic = new Ultrasonic(RobotMap.ULTRASONIC_OUTPUT, RobotMap.ULTRASONIC_INPUT);
-        leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, false, Encoder.EncodingType.k4X);
-        rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, false, Encoder.EncodingType.k4X);
+        leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true, Encoder.EncodingType.k4X);
+        rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true, Encoder.EncodingType.k4X);
     }
 
     /**
@@ -60,13 +58,13 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Gyro", gyro.getAngle());
         double angle=gyro.getAngle();
         double angleSuper=gyro.getAngle();
-        double range=ultrasonic.getRangeInches();
         SmartDashboard.putNumber("gyro angle:",angle);
         SmartDashboard.putNumber("angleSuper",angleSuper);
         SmartDashboard.putNumber("Angle X", gyro.getAngleX());
         SmartDashboard.putNumber("Angle Y", gyro.getAngleY());
         SmartDashboard.putNumber("Angle Z", gyro.getAngleZ());
-        SmartDashboard.putNumber("range?",range);
+        System.out.println("Right: " + getRightEncoderCount());
+        System.out.println("Left: " + getLeftEncoderCount());
     }
 
     public void updateDashboard(){
@@ -87,8 +85,8 @@ public class Drive extends Subsystem {
      * Reset the robots sensors to the zero states.
      */
     public void reset() {
-        //leftEncoder.reset();
-        //rightEncoder.reset();
+        leftEncoder.reset();
+        rightEncoder.reset();
         gyro.reset();
     }
 

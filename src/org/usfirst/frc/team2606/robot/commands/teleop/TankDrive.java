@@ -19,12 +19,12 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.drive.move(Robot.oi.getLeftAnalogYValue(), Robot.oi.getRightAnalogYValue());
+        Robot.drive.move(Robot.oi.getLeftAnalogYValue()*-1, Robot.oi.getRightAnalogYValue()*-1);
 
-        if(Robot.oi.getRightTriggerValue()>0.5 && Robot.oi.getRightTriggerValue()>Robot.oi.getLeftTriggerValue()) {
-            Robot.lift.setLiftMotor(0.5);
-        } else if(Robot.oi.getLeftTriggerValue()>0.5) {
-            Robot.lift.setLiftMotor(-0.5);
+        if(Robot.oi.getRightTriggerValue()>0.1 && Robot.oi.getRightTriggerValue()>Robot.oi.getLeftTriggerValue()) {
+            Robot.lift.setLiftMotor(Robot.oi.getRightTriggerValue());
+        } else if(Robot.oi.getLeftTriggerValue()>0.1) {
+            Robot.lift.setLiftMotor(-1*Robot.oi.getLeftTriggerValue());
         } else {
             Robot.lift.setLiftMotor(0);
         }

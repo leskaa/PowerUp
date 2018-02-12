@@ -23,8 +23,8 @@ public class RobotMap {
     public static final int CLIMB_MOTOR = 1;
     public static final int LIFT_MOTOR = 0;
 
-    public static final int RIGHT_INTAKE_MOTOR = 0;
-    public static final int LEFT_INTAKE_MOTOR = 0;
+    public static final int RIGHT_INTAKE_MOTOR = 4;
+    public static final int LEFT_INTAKE_MOTOR = 5;
 
     public static final int XBOX_CONTROLLER = 0;
 
@@ -69,6 +69,6 @@ public class RobotMap {
     public static final int RIGHT_ENCODER_CHANNEL_A = 0;
     public static final int RIGHT_ENCODER_CHANNEL_B = 1;
 
-    public static final double MAX_VELOCITY = 1.7;
+    public static final double MAX_VELOCITY = 0.5;
 
 }

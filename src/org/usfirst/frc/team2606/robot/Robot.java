@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		drive.reset();
 		String autoSelected = table.getString("autonomousSelected", "Default");
 		switch (autoSelected) {
 			case "Place Cube on Switch":
@@ -119,6 +120,7 @@ public class Robot extends TimedRobot {
 	 */
 
 	public void autonomousPeriodic() {
+		drive.log();
 		Scheduler.getInstance().run();
 	}
 
