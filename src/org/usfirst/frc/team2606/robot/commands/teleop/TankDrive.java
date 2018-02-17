@@ -1,11 +1,15 @@
 package org.usfirst.frc.team2606.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2606.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2606.robot.RobotMap;
 
 public class TankDrive extends Command {
+
+    double startTime = 0;
+
+    boolean isRealigning = false;
+    boolean isRealigningLong = false;
 
     public TankDrive() {
         requires(Robot.drive);
@@ -29,12 +33,69 @@ public class TankDrive extends Command {
             Robot.lift.setLiftMotor(0);
         }
 
-        if(Robot.oi.getRightBumper().get()) {
+        // TODO Original code at 50% power
+        /*if(Robot.oi.getRightBumper().get()) {
             Robot.intake.setMotors(-0.5, -0.5);
         } else if(Robot.oi.getLeftBumper().get()) {
             Robot.intake.setMotors(0.5, 0.5);
         } else {
             Robot.intake.setMotors(0, 0);
+        }
+        */
+
+        // Test Intake Code
+        if(Robot.oi.getRightBumper().get()) {
+            Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
+        } else if(Robot.oi.getLeftBumper().get()) {
+            Robot.intake.setMotors(RobotMap.intakeSpeedLeft, RobotMap.intakeSpeedRight);
+        } else {
+            Robot.intake.setMotors(0, 0);
+        }
+
+        // Realign Cube
+        if(Robot.oi.getXboxA().get()) {
+            startTime = System.currentTimeMillis();
+            isRealigning = true;
+            isRealigningLong = false;
+        }
+
+        if(Robot.oi.getXboxY().get()) {
+            startTime = System.currentTimeMillis();
+            isRealigning = true;
+            isRealigningLong = true;
+        }
+
+        if (isRealigning) {
+            if (!isRealigningLong) {
+                if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeOut) {
+                    Robot.intake.setMotors(0.4, 0.30);
+                } else if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeStop) {
+                    Robot.intake.setMotors(0.0, 0.0);
+                } else if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeIn) {
+                    Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
+                } else { //
+                    startTime = 0;
+                    isRealigning = false;
+                    isRealigningLong = false;
+
+                    Robot.intake.setMotors(0.0, 0.0);
+                }
+            }
+            else if (isRealigningLong) {
+                if (System.currentTimeMillis() <= startTime + RobotMap.longTimeOut) {
+                    Robot.intake.setMotors(0.3, 0.20);
+                } else if (System.currentTimeMillis() <= startTime + RobotMap.longTimeStop) {
+                    Robot.intake.setMotors(0.0, 0.0);
+                } else if (System.currentTimeMillis() <= startTime + RobotMap.longTimeIn) {
+                    Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
+                } else { //
+                    startTime = 0;
+                    isRealigning = false;
+                    isRealigningLong = false;
+
+                    Robot.intake.setMotors(0.0, 0.0);
+                }
+            }
         }
     }
 

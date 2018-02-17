@@ -71,4 +71,17 @@ public class RobotMap {
 
     public static final double MAX_VELOCITY = 0.5;
 
+    // Short realign times (Milliseconds)
+    public static final double quickTimeOut = 50;
+    public static final double quickTimeStop = 150;
+    public static final double quickTimeIn = 475;
+
+    // Long realign times (Milliseconds)
+    public static final double longTimeOut = 250;
+    public static final double longTimeStop = 350;
+    public static final double longTimeIn = 675;
+
+    public static final double intakeSpeedLeft = 0.60;
+    public static final double intakeSpeedRight = 0.50;
+
 }
