@@ -15,14 +15,14 @@ public class CenterSwitchPlace extends CommandGroup {
     public CenterSwitchPlace(int side) {
         if(side==0){
             addSequential(new BreakPlane());
-            addSequential(new CenterToLeftSwitch());
             addParallel(new LiftToSwitchHeight());
+            addSequential(new CenterToLeftSwitch());
             addSequential(new SlowCubeEject());
         }
         if(side==1) {
             addSequential(new BreakPlane());
-            addSequential(new CenterToRightSwitch());
             addParallel(new LiftToSwitchHeight());
+            addSequential(new CenterToRightSwitch());
             addSequential(new SlowCubeEject());
         }
     }
