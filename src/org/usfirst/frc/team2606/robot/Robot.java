@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
 	private String[] teleSelector;
 	private Command autonomousCommand;
 	private Command teleCommand;
+	private int switchSide;
 
 	public UsbCamera frontCamera, backCamera;
 	public static NetworkTable table;
@@ -97,6 +98,19 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameData.length() > 0)
+		{
+			if(gameData.charAt(0) == 'L')
+			{
+				switchSide = 0;
+			} else {
+				switchSide = 1;
+			}
+		}
+		//TODO ONLY FOR TESTING!!!
+		switchSide = 0;
 		drive.reset();
 		String autoSelected = table.getString("autonomousSelected", "Default");
 		switch (autoSelected) {
@@ -105,7 +119,7 @@ public class Robot extends TimedRobot {
 				break;
 			case "Default":
 			default:
-				autonomousCommand = new CenterToRightSwitch();
+				autonomousCommand = new CenterSwitchPlace(switchSide);
 				break;
 		}
 
