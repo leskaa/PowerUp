@@ -69,7 +69,7 @@ public class RobotMap {
     public static final int RIGHT_ENCODER_CHANNEL_A = 0;
     public static final int RIGHT_ENCODER_CHANNEL_B = 1;
 
-    public static final double MAX_VELOCITY = 0.5;
+    public static final double MAX_VELOCITY = 1;
 
     // Short realign times (Milliseconds)
     public static final double quickTimeOut = 50;
@@ -83,5 +83,6 @@ public class RobotMap {
 
     public static final double intakeSpeedLeft = 0.60;
     public static final double intakeSpeedRight = 0.50;
+
 
 }

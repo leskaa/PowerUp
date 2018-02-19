@@ -26,16 +26,18 @@ public class PathfinderCommand extends Command {
      */
     @Override
     protected void initialize() {
-        Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-                Trajectory.Config.SAMPLES_HIGH, 0.05, RobotMap.MAX_VELOCITY, 2.0, 60.0);
+        Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC,
+                Trajectory.Config.SAMPLES_LOW, 0.02, RobotMap.MAX_VELOCITY, 0.50, 60);
         Trajectory trajectory = Pathfinder.generate(points, config);
         TankModifier modifier = new TankModifier(trajectory).modify(RobotMap.WHEELBASE_RATIO);
         left = new EncoderFollower(modifier.getLeftTrajectory());
         right = new EncoderFollower(modifier.getRightTrajectory());
-        left.configureEncoder(Robot.drive.getLeftEncoderCount(), 1440, RobotMap.WHEEL_DIAMETER);
-        right.configureEncoder(Robot.drive.getRightEncoderCount(), 1440, RobotMap.WHEEL_DIAMETER);
-        left.configurePIDVA(1.0, 0.0, 0.0, 1 / RobotMap.MAX_VELOCITY, 0);
-        right.configurePIDVA(1.0, 0.0, 0.0, 1 / RobotMap.MAX_VELOCITY, 0);
+        left.configureEncoder(Robot.drive.getLeftEncoderCount(), 362, RobotMap.WHEEL_DIAMETER);
+        right.configureEncoder(Robot.drive.getRightEncoderCount(), 252, RobotMap.WHEEL_DIAMETER);
+        double prop = .5;
+        double der = .5;
+        left.configurePIDVA(prop, 0.0, der, 1 / RobotMap.MAX_VELOCITY, 0);
+        right.configurePIDVA(prop, 0.0, der, 1 / RobotMap.MAX_VELOCITY, 0);
     }
 
 
@@ -45,13 +47,15 @@ public class PathfinderCommand extends Command {
      */
     @Override
     protected void execute() {
-        double l = left.calculate(Robot.drive.getLeftEncoderCount());
-        double r = right.calculate(Robot.drive.getRightEncoderCount());
-        double gyroHeading = Robot.drive.getGyroRealHeading();
-        double desiredHeading = Pathfinder.r2d(left.getHeading());
-        double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-        double turn = 0.8 * (-1.0 / 80.0) * angleDifference;
-        Robot.drive.move(l + turn, r - turn);
+        //double l = left.calculate(Robot.drive.getLeftEncoderCount());
+        //double r = right.calculate(Robot.drive.getRightEncoderCount());
+        //double gyroHeading = Robot.drive.getGyroRealHeading();
+        //double desiredHeading = Pathfinder.r2d(left.getHeading());
+        //double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
+        //double turn = 0.8 * (-1.0 / 80.0) * angleDifference;
+        Robot.drive.move(left.calculate(Robot.drive.getLeftEncoderCount()), right.calculate(Robot.drive.getRightEncoderCount()));
+        //System.out.println("LEFT MOTOR: "+(l+turn));
+        //System.out.println("RIGHT MOTOR: "+ (r-turn));
     }
 
 

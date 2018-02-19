@@ -7,6 +7,8 @@ import org.usfirst.frc.team2606.robot.RobotMap;
 public class TankDrive extends Command {
 
     double startTime = 0;
+    double leftDrive = 0;
+    double rightDrive = 0;
 
     boolean isRealigning = false;
     boolean isRealigningLong = false;
@@ -23,12 +25,23 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //TODO faster start
+        //if(Robot.oi.getLeftAnalogYValue()>0.05 || Robot.oi.getLeftAnalogYValue()<-0.05) {
+        //    if(Robot.oi.getLeftAnalogYValue()<0.3&&Robot.oi.getRightAnalogYValue()>-0.3){
+        //        if(Robot.oi)
+        //        leftDrive = 0.3;
+        //    }
+        //}
+        //if(Robot.oi.getLeftAnalogYValue() < 0.3 && Robot.oi.getRightAnalogYValue() > -0.3) {
+        //   Robot.oi.getLeftAnalogYValue()
+        //}
+
         Robot.drive.move(Robot.oi.getLeftAnalogYValue()*-1, Robot.oi.getRightAnalogYValue()*-1);
 
         if(Robot.oi.getRightTriggerValue()>0.1 && Robot.oi.getRightTriggerValue()>Robot.oi.getLeftTriggerValue()) {
             Robot.lift.setLiftMotor(Robot.oi.getRightTriggerValue());
         } else if(Robot.oi.getLeftTriggerValue()>0.1) {
-            Robot.lift.setLiftMotor(-1*Robot.oi.getLeftTriggerValue());
+            Robot.lift.setLiftMotor(-1 * Robot.oi.getLeftTriggerValue());
         } else {
             Robot.lift.setLiftMotor(0);
         }
@@ -45,9 +58,9 @@ public class TankDrive extends Command {
 
         // Test Intake Code
         if(Robot.oi.getRightBumper().get()) {
-            Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
-        } else if(Robot.oi.getLeftBumper().get()) {
             Robot.intake.setMotors(RobotMap.intakeSpeedLeft, RobotMap.intakeSpeedRight);
+        } else if(Robot.oi.getLeftBumper().get()) {
+            Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
         } else {
             Robot.intake.setMotors(0, 0);
         }
@@ -65,14 +78,18 @@ public class TankDrive extends Command {
             isRealigningLong = true;
         }
 
+        if(Robot.oi.getXboxB().get()) {
+            Robot.intake.setMotors(-1, -1);
+        }
+
         if (isRealigning) {
             if (!isRealigningLong) {
                 if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeOut) {
-                    Robot.intake.setMotors(0.4, 0.30);
+                    Robot.intake.setMotors(-0.4, -0.30);
                 } else if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeStop) {
                     Robot.intake.setMotors(0.0, 0.0);
                 } else if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeIn) {
-                    Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
+                    Robot.intake.setMotors(RobotMap.intakeSpeedLeft, RobotMap.intakeSpeedRight);
                 } else { //
                     startTime = 0;
                     isRealigning = false;
@@ -83,11 +100,11 @@ public class TankDrive extends Command {
             }
             else if (isRealigningLong) {
                 if (System.currentTimeMillis() <= startTime + RobotMap.longTimeOut) {
-                    Robot.intake.setMotors(0.3, 0.20);
+                    Robot.intake.setMotors(-0.3, -0.20);
                 } else if (System.currentTimeMillis() <= startTime + RobotMap.longTimeStop) {
                     Robot.intake.setMotors(0.0, 0.0);
                 } else if (System.currentTimeMillis() <= startTime + RobotMap.longTimeIn) {
-                    Robot.intake.setMotors(-RobotMap.intakeSpeedLeft, -RobotMap.intakeSpeedRight);
+                    Robot.intake.setMotors(RobotMap.intakeSpeedLeft, RobotMap.intakeSpeedRight);
                 } else { //
                     startTime = 0;
                     isRealigning = false;

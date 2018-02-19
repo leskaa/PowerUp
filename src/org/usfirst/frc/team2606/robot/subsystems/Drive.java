@@ -38,9 +38,10 @@ public class Drive extends Subsystem {
         left = new SpeedControllerGroup(frontLeft, backLeft);
         right = new SpeedControllerGroup(frontRight, backRight);
         drive = new DifferentialDrive(left, right);
+        drive.setSafetyEnabled(false);
         gyro = new ADIS16448_IMU();
         leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_CHANNEL_A, RobotMap.LEFT_ENCODER_CHANNEL_B, true, Encoder.EncodingType.k4X);
-        rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, true, Encoder.EncodingType.k4X);
+        rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_CHANNEL_A, RobotMap.RIGHT_ENCODER_CHANNEL_B, false, Encoder.EncodingType.k4X);
     }
 
     /**
@@ -79,6 +80,8 @@ public class Drive extends Subsystem {
      */
     public void move(double left, double right) {
         drive.tankDrive(left, right);
+        System.out.println("Right: " + getRightEncoderCount());
+        System.out.println("Left: " + getLeftEncoderCount());
     }
 
     /**

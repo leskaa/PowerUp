@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 				break;
 			case "Default":
 			default:
-				autonomousCommand = new BreakPlane();
+				autonomousCommand = new CenterToRightSwitch();
 				break;
 		}
 
@@ -130,11 +130,11 @@ public class Robot extends TimedRobot {
 		String teleSelected = table.getString("teleSelected", "Default");
 		switch (teleSelected) {
 			case "Calvin Drive":
-				autonomousCommand = new SwitchPlace();
+				teleCommand = new CalvinDrive();
 				break;
 			case "Tank Drive":
 			default:
-				autonomousCommand = new BreakPlane();
+				teleCommand = new TankDrive();
 				break;
 		}
 
@@ -142,7 +142,7 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 
-		if (teleCommand != null) {
+		if (teleCommand == null) {
 			teleCommand.start();
 		}
 		drive.reset();

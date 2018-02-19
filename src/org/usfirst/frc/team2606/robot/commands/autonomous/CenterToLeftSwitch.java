@@ -10,12 +10,11 @@ import org.usfirst.frc.team2606.robot.Robot;
 import org.usfirst.frc.team2606.robot.RobotMap;
 
 
-public class BreakPlane extends PathfinderCommand {
-    public BreakPlane() {
+public class CenterToLeftSwitch extends PathfinderCommand {
+    public CenterToLeftSwitch() {
         super(new Waypoint[]{
                 new Waypoint(0, 0, 0),
-                new Waypoint(2, 1, Pathfinder.d2r(45)),
-                new Waypoint(3, 3, Pathfinder.d2r(90))
+                new Waypoint(1.7, 1, Pathfinder.d2r(-20))
         });
     }
 }
