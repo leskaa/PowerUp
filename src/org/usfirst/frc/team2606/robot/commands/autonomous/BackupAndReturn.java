@@ -3,14 +3,12 @@ package org.usfirst.frc.team2606.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2606.robot.Robot;
 
-public class RotateRight extends Command{
+public class BackupAndReturn extends Command{
 
     private double startTime;
-    private double duration;
 
-    public RotateRight(int duration) {
+    public BackupAndReturn() {
         requires(Robot.drive);
-        this.duration = duration;
     }
 
     // Called just before this Command runs the first time
@@ -20,13 +18,18 @@ public class RotateRight extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (System.currentTimeMillis() < startTime + duration) {
-            Robot.drive.move(0.5, -0.5);
+        if(System.currentTimeMillis() < startTime + 500) {
+            Robot.drive.move(0.4, 0.4);
+        } else if(System.currentTimeMillis() < startTime + 2000) {
+            Robot.drive.move(0,0);
+        }
+        else if(System.currentTimeMillis() < startTime + 2400) {
+            Robot.drive.move(-0.4, -0.4);
         }
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + duration + 50) {
+        if(System.currentTimeMillis() > startTime + 2550) {
             return true;
         }
         return false;

@@ -11,8 +11,8 @@ import org.usfirst.frc.team2606.robot.Robot;
 import org.usfirst.frc.team2606.robot.RobotMap;
 
 
-public class LeftSwitchOrScale extends CommandGroup {
-    public LeftSwitchOrScale(int whereToGo) {
+public class RightSwitchOrScale extends CommandGroup {
+    public RightSwitchOrScale(int whereToGo) {
         //Only Forward
         if(whereToGo==0) {
             addSequential(new BreakPlane());
@@ -22,8 +22,8 @@ public class LeftSwitchOrScale extends CommandGroup {
         if(whereToGo==1) {
             addSequential(new BreakPlane());
             addParallel(new LiftToSwitchHeight());
-            addSequential(new LeftToSwitch());
-            addSequential(new RotateRight(1400));
+            addSequential(new GoForward(3.5));
+            addSequential(new RotateLeft(1400));
             addSequential(new SlowCubeEject());
             addParallel(new LowerLift());
             addSequential(new GoBackward(300));
@@ -32,7 +32,7 @@ public class LeftSwitchOrScale extends CommandGroup {
         if(whereToGo==2||whereToGo==3||whereToGo==4) {
             addSequential(new BreakPlane());
             addSequential(new GoForward(7));
-            addSequential(new RotateRight(1400));
+            addSequential(new RotateLeft(1400));
             addParallel(new LiftToScaleHeight());
             addSequential(new BackupAndReturn());
             addSequential(new SlowCubeEject());
@@ -41,21 +41,21 @@ public class LeftSwitchOrScale extends CommandGroup {
         }
         //Switch After Scale
         if(whereToGo==3) {
-            addSequential(new RotateRight(1100));
+            addSequential(new RotateLeft(1100));
             addParallel(new IntakeFor(1150));
             addSequential(new GoForward(2));
-            addSequential(new RotateRight(300));
+            addSequential(new RotateLeft(300));
             addSequential(new GoBackward(300));
             addSequential(new LiftToSwitchHeight());
             addSequential(new SlowCubeEject());
         }
         //Far Switch After Scale
         if(whereToGo==4) {
-            addSequential(new RotateRight(2750));
+            addSequential(new RotateLeft(2750));
             addSequential(new GoForward(1.8));
-            addSequential(new RotateLeft(1400));
+            addSequential(new RotateRight(1400));
             addSequential(new GoForward(2));
-            addSequential(new RotateRight(1500));
+            addSequential(new RotateLeft(1500));
             addSequential(new GoForward(0.3));
             addParallel(new IntakeFor(500));
             addSequential(new LiftToSwitchHeight());
@@ -66,9 +66,9 @@ public class LeftSwitchOrScale extends CommandGroup {
         //Only Far Switch
         if(whereToGo ==5) {
             addSequential(new GoForward(4.5));
-            addSequential(new RotateRight(1400));
+            addSequential(new RotateLeft(1400));
             addSequential(new GoForward(2));
-            addSequential(new RotateRight(1500));
+            addSequential(new RotateLeft(1500));
             addSequential(new GoForward(0.3));
             addParallel(new IntakeFor(500));
             addSequential(new LiftToSwitchHeight());

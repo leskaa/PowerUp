@@ -2,15 +2,14 @@ package org.usfirst.frc.team2606.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2606.robot.Robot;
+import org.usfirst.frc.team2606.robot.subsystems.Lift;
 
-public class RotateRight extends Command{
+public class LowerLift extends Command{
 
     private double startTime;
-    private double duration;
 
-    public RotateRight(int duration) {
-        requires(Robot.drive);
-        this.duration = duration;
+    public LowerLift() {
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -20,13 +19,15 @@ public class RotateRight extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (System.currentTimeMillis() < startTime + duration) {
-            Robot.drive.move(0.5, -0.5);
+        if(System.currentTimeMillis() < startTime + 4000) {
+            Robot.lift.setLiftMotor(-1);
+        } else {
+            Robot.lift.setLiftMotor(0);
         }
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + duration + 50) {
+        if(System.currentTimeMillis() > startTime + 4050) {
             return true;
         }
         return false;
@@ -34,7 +35,7 @@ public class RotateRight extends Command{
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.drive.move(0, 0);
+        Robot.lift.setLiftMotor(0);
     }
 
     // Called when another command which requires one or more of the same

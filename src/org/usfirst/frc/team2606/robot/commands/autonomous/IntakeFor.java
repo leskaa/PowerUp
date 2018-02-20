@@ -3,13 +3,13 @@ package org.usfirst.frc.team2606.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2606.robot.Robot;
 
-public class RotateRight extends Command{
+public class IntakeFor extends Command {
 
     private double startTime;
-    private double duration;
+    private int duration;
 
-    public RotateRight(int duration) {
-        requires(Robot.drive);
+    public IntakeFor(int duration) {
+        requires(Robot.intake);
         this.duration = duration;
     }
 
@@ -20,13 +20,11 @@ public class RotateRight extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (System.currentTimeMillis() < startTime + duration) {
-            Robot.drive.move(0.5, -0.5);
-        }
+        Robot.intake.setMotors(1.0, 1.0);
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + duration + 50) {
+        if(System.currentTimeMillis() > startTime + duration) {
             return true;
         }
         return false;
@@ -34,7 +32,7 @@ public class RotateRight extends Command{
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.drive.move(0, 0);
+        Robot.intake.setMotors(0, 0);
     }
 
     // Called when another command which requires one or more of the same
