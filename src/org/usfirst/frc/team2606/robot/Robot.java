@@ -36,7 +36,9 @@ public class Robot extends TimedRobot {
 	private Command autonomousCommand;
 	private Command teleCommand;
 	private int switchSide;
-	private int sideMode;
+	private int scaleSide;
+	private int leftSideMode;
+	private int rightSideMode;
 
 	public UsbCamera frontCamera, backCamera;
 	public static NetworkTable table;
@@ -109,21 +111,69 @@ public class Robot extends TimedRobot {
 			} else {
 				switchSide = 1;
 			}
+			if(gameData.charAt(1) == 'L')
+			{
+				scaleSide = 0;
+			} else {
+				scaleSide = 1;
+			}
 		}
 		//TODO ONLY FOR TESTING!!!
 		switchSide = 0;
-		sideMode = 2;
+		scaleSide = 0;
 		drive.reset();
 		String autoSelected = table.getString("autonomousSelected", "Default");
 		switch (autoSelected) {
-			case "Place Cube on Switch":
-				autonomousCommand = new SwitchPlace();
+			case "Nothing":
+				autonomousCommand = new BreakPlane();
 				break;
 			case "Center":
 				autonomousCommand = new CenterSwitchPlace(switchSide);
+				break;
+			case "Left":
+				if(switchSide == 0 && scaleSide == 0) {
+					leftSideMode = 3;
+				} else if(switchSide == 0 && scaleSide == 1) {
+					leftSideMode = 1;
+				} else if(switchSide == 1 && scaleSide == 0) {
+					leftSideMode = 4;
+				} else if(switchSide == 1 && scaleSide == 1) {
+					leftSideMode = 5;
+				} else {
+					leftSideMode = 0;
+				}
+				autonomousCommand = new LeftSwitchOrScale(leftSideMode);
+				break;
+			case "Right":
+				if(switchSide == 0 && scaleSide == 0) {
+					rightSideMode = 5;
+				} else if(switchSide == 0 && scaleSide == 1) {
+					leftSideMode = 4;
+				} else if(switchSide == 1 && scaleSide == 0) {
+					leftSideMode = 1;
+				} else if(switchSide == 1 && scaleSide == 1) {
+					leftSideMode = 3;
+				} else {
+					rightSideMode = 0;
+				}
+				autonomousCommand = new RightSwitchOrScale(rightSideMode);
+				break;
 			case "Default":
 			default:
-				autonomousCommand = new LeftSwitchOrScale(sideMode);
+				if(switchSide == 0 && scaleSide == 0) {
+					leftSideMode = 3;
+				} else if(switchSide == 0 && scaleSide == 1) {
+					leftSideMode = 1;
+				} else if(switchSide == 1 && scaleSide == 0) {
+					leftSideMode = 4;
+				} else if(switchSide == 1 && scaleSide == 1) {
+					leftSideMode = 5;
+				} else {
+					leftSideMode = 0;
+				}
+				//TODO REMOVE
+				leftSideMode = 2;
+				autonomousCommand = new LeftSwitchOrScale(leftSideMode);
 				break;
 		}
 
