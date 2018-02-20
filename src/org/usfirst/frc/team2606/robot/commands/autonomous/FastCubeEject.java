@@ -2,14 +2,13 @@ package org.usfirst.frc.team2606.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2606.robot.Robot;
-import org.usfirst.frc.team2606.robot.subsystems.Lift;
 
-public class LiftToSwitchHeight extends Command{
+public class FastCubeEject extends Command {
 
     private double startTime;
 
-    public LiftToSwitchHeight() {
-        requires(Robot.lift);
+    public FastCubeEject() {
+        requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -19,15 +18,11 @@ public class LiftToSwitchHeight extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(System.currentTimeMillis() < startTime + 1800) {
-            Robot.lift.setLiftMotor(1);
-        } else {
-            Robot.lift.setLiftMotor(0);
-        }
+        Robot.intake.setMotors(-1.0, -1.0);
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + 1850) {
+        if(System.currentTimeMillis() > startTime + 250) {
             return true;
         }
         return false;
@@ -35,7 +30,7 @@ public class LiftToSwitchHeight extends Command{
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.lift.setLiftMotor(0);
+        Robot.intake.setMotors(0, 0);
     }
 
     // Called when another command which requires one or more of the same

@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
 	private Command autonomousCommand;
 	private Command teleCommand;
 	private int switchSide;
+	private int sideMode;
 
 	public UsbCamera frontCamera, backCamera;
 	public static NetworkTable table;
@@ -111,15 +112,18 @@ public class Robot extends TimedRobot {
 		}
 		//TODO ONLY FOR TESTING!!!
 		switchSide = 0;
+		sideMode = 2;
 		drive.reset();
 		String autoSelected = table.getString("autonomousSelected", "Default");
 		switch (autoSelected) {
 			case "Place Cube on Switch":
 				autonomousCommand = new SwitchPlace();
 				break;
+			case "Center":
+				autonomousCommand = new CenterSwitchPlace(switchSide);
 			case "Default":
 			default:
-				autonomousCommand = new CenterSwitchPlace(switchSide);
+				autonomousCommand = new LeftSwitchOrScale(sideMode);
 				break;
 		}
 

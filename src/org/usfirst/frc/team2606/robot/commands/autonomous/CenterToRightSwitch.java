@@ -14,7 +14,7 @@ public class CenterToRightSwitch extends PathfinderCommand {
     public CenterToRightSwitch() {
         super(new Waypoint[]{
                 new Waypoint(0, 0, 0),
-                new Waypoint(1.7, -1, 0)
+                new Waypoint(1.7, -0.8, 0)
         });
     }
 }

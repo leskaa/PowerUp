@@ -19,9 +19,9 @@ public class BreakPlane extends Command{
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if(System.currentTimeMillis() < startTime + 100) {
-            Robot.drive.move(1, 1);
+            Robot.drive.move(0.5, 0.5);
         } else if(System.currentTimeMillis() < startTime + 200) {
-            Robot.drive.move(-1, -1);
+            Robot.drive.move(-0.5, -0.5);
         }
     }
 
