@@ -30,20 +30,20 @@ public class LeftSwitchOrScale extends CommandGroup {
         }
         //Scale
         if(whereToGo==2||whereToGo==3||whereToGo==4) {
-            addSequential(new BreakPlane());
+            //addSequential(new BreakPlane());
             addSequential(new GoForward(7));
-            addSequential(new RotateRight(1400));
+            addSequential(new RotateRight(1300));
             addParallel(new LiftToScaleHeight());
             addSequential(new BackupAndReturn());
-            addSequential(new SlowCubeEject());
+            addSequential(new FastCubeEject());
             addParallel(new LowerLift());
             addSequential(new GoBackward(300));
         }
         //Switch After Scale
         if(whereToGo==3) {
-            addSequential(new RotateRight(1100));
-            addParallel(new IntakeFor(1150));
-            addSequential(new GoForward(2));
+            addSequential(new RotateRight(700));
+            addParallel(new IntakeFor(4050));
+            addSequential(new GoForward(2.7));
             addSequential(new RotateRight(300));
             addSequential(new GoBackward(300));
             addSequential(new LiftToSwitchHeight());

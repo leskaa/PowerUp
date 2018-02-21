@@ -26,7 +26,7 @@ public class BreakPlane extends Command{
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + 250) {
+        if(System.currentTimeMillis() > startTime + 100) {
             return true;
         }
         return false;

@@ -19,7 +19,7 @@ public class LowerLift extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(System.currentTimeMillis() < startTime + 4000) {
+        if(System.currentTimeMillis() < startTime + 6000) {
             Robot.lift.setLiftMotor(-1);
         } else {
             Robot.lift.setLiftMotor(0);
@@ -27,7 +27,7 @@ public class LowerLift extends Command{
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + 4050) {
+        if(System.currentTimeMillis() > startTime + 6000) {
             return true;
         }
         return false;

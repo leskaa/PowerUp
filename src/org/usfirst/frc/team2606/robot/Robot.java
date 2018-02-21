@@ -172,7 +172,7 @@ public class Robot extends TimedRobot {
 					leftSideMode = 0;
 				}
 				//TODO REMOVE
-				leftSideMode = 2;
+				leftSideMode = 3;
 				autonomousCommand = new LeftSwitchOrScale(leftSideMode);
 				break;
 		}

@@ -26,7 +26,7 @@ public class RotateRight extends Command{
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + duration + 50) {
+        if(System.currentTimeMillis() > startTime + duration) {
             return true;
         }
         return false;

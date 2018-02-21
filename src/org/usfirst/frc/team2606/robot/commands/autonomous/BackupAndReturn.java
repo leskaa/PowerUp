@@ -18,18 +18,18 @@ public class BackupAndReturn extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(System.currentTimeMillis() < startTime + 500) {
-            Robot.drive.move(0.4, 0.4);
-        } else if(System.currentTimeMillis() < startTime + 2000) {
+        if(System.currentTimeMillis() < startTime + 200) {
+            Robot.drive.move(-0.6, -0.6);
+        } else if(System.currentTimeMillis() < startTime + 3000) {
             Robot.drive.move(0,0);
         }
-        else if(System.currentTimeMillis() < startTime + 2400) {
-            Robot.drive.move(-0.4, -0.4);
+        else if(System.currentTimeMillis() < startTime + 5400) {
+            Robot.drive.move(0.5, 0.5);
         }
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + 2550) {
+        if(System.currentTimeMillis() > startTime + 5400) {
             return true;
         }
         return false;

@@ -22,7 +22,7 @@ public class SlowCubeEject extends Command {
     }
 
     protected boolean isFinished() {
-        if(System.currentTimeMillis() > startTime + 250) {
+        if(System.currentTimeMillis() > startTime + 350) {
             return true;
         }
         return false;
