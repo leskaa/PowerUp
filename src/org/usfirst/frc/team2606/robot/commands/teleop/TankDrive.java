@@ -82,6 +82,10 @@ public class TankDrive extends Command {
             Robot.intake.setMotors(-1, -1);
         }
 
+        if(Robot.oi.getXboxX().get()) {
+            Robot.intake.setMotors(-0.2, -0.2);
+        }
+
         if (isRealigning) {
             if (!isRealigningLong) {
                 if (System.currentTimeMillis() <= startTime + RobotMap.quickTimeOut) {

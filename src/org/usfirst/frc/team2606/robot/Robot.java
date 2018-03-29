@@ -62,8 +62,8 @@ public class Robot extends TimedRobot {
 		table = NetworkTable.getTable("Dashboard");
 		frontCamera = CameraServer.getInstance().startAutomaticCapture("Forward Camera", RobotMap.FRONT_CAMERA);
 		backCamera = CameraServer.getInstance().startAutomaticCapture("Backward Camera", RobotMap.BACK_CAMERA);
-		autoSelector = new String[RobotMap.AUTO_MODES-1];
-		teleSelector = new String[RobotMap.TELE_MODES-1];
+		String[] autoSelector = {"Break Plane", "Center", "Left", "Right", "Default"};
+		String[] teleSelector = {"Calvin Drive", "Tank Drive", "Default"};
 
 		//autoChooser.addObject("Break the Plane", new BreakPlane());
 		table.putStringArray("autonomousModes", autoSelector);
@@ -118,62 +118,39 @@ public class Robot extends TimedRobot {
 				scaleSide = 1;
 			}
 		}
-		//TODO ONLY FOR TESTING!!!
-		switchSide = 0;
-		scaleSide = 0;
 		drive.reset();
 		String autoSelected = table.getString("autonomousSelected", "Default");
 		switch (autoSelected) {
-			case "Nothing":
+			case "Break Plane":
 				autonomousCommand = new BreakPlane();
 				break;
 			case "Center":
 				autonomousCommand = new CenterSwitchPlace(switchSide);
 				break;
 			case "Left":
-				if(switchSide == 0 && scaleSide == 0) {
-					leftSideMode = 3;
-				} else if(switchSide == 0 && scaleSide == 1) {
+				if(scaleSide == 0) {
+					leftSideMode = 2;
+				} else if(switchSide == 0) {
 					leftSideMode = 1;
-				} else if(switchSide == 1 && scaleSide == 0) {
-					leftSideMode = 4;
-				} else if(switchSide == 1 && scaleSide == 1) {
-					leftSideMode = 5;
 				} else {
 					leftSideMode = 0;
 				}
 				autonomousCommand = new LeftSwitchOrScale(leftSideMode);
 				break;
 			case "Right":
-				if(switchSide == 0 && scaleSide == 0) {
-					rightSideMode = 5;
-				} else if(switchSide == 0 && scaleSide == 1) {
-					leftSideMode = 4;
-				} else if(switchSide == 1 && scaleSide == 0) {
+				if(scaleSide == 1) {
+					rightSideMode = 2;
+				} else if(switchSide == 1) {
 					leftSideMode = 1;
-				} else if(switchSide == 1 && scaleSide == 1) {
-					leftSideMode = 3;
 				} else {
 					rightSideMode = 0;
 				}
 				autonomousCommand = new RightSwitchOrScale(rightSideMode);
 				break;
 			case "Default":
+				autonomousCommand = new BreakPlane();
 			default:
-				if(switchSide == 0 && scaleSide == 0) {
-					leftSideMode = 3;
-				} else if(switchSide == 0 && scaleSide == 1) {
-					leftSideMode = 1;
-				} else if(switchSide == 1 && scaleSide == 0) {
-					leftSideMode = 4;
-				} else if(switchSide == 1 && scaleSide == 1) {
-					leftSideMode = 5;
-				} else {
-					leftSideMode = 0;
-				}
-				//TODO REMOVE
-				leftSideMode = 3;
-				autonomousCommand = new LeftSwitchOrScale(leftSideMode);
+				autonomousCommand = new BreakPlane();
 				break;
 		}
 
@@ -201,6 +178,8 @@ public class Robot extends TimedRobot {
 				teleCommand = new CalvinDrive();
 				break;
 			case "Tank Drive":
+				teleCommand = new TankDrive();
+				break;
 			default:
 				teleCommand = new TankDrive();
 				break;
